@@ -6,7 +6,6 @@ class ArticlesController < ApplicationController
     def create
         article = Article.create(article_params)
         render json: article, status: :created
-
     end
 
     def show
@@ -33,9 +32,10 @@ class ArticlesController < ApplicationController
         article = Article.find_by(id: params[:id])
 
         if article
-            article.destroy(article_params)
+            article.destroy
+            render json: {delete: "Article deleted successfully"}, status: :no_content
         else
-            render json: {error: "Article deleted successfully"}, status: :no_content
+            render json: {error: "Article not found"}, status: :not_found
         end
     end
 
